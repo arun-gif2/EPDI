@@ -1,0 +1,313 @@
+*{
+box-sizing:border-box;
+}
+
+body{
+margin:0;
+background:#07111d;
+color:white;
+font-family:Arial,sans-serif;
+}
+
+header{
+background:#0b2035;
+padding:20px;
+text-align:center;
+border-bottom:2px solid #17658d;
+}
+
+header h1{
+margin:0;
+font-size:24px;
+}
+
+header p{
+color:#91a9bb;
+font-size:13px;
+}
+
+.container{
+max-width:1400px;
+margin:auto;
+padding:14px;
+}
+
+.cards{
+display:grid;
+grid-template-columns:
+repeat(auto-fit,minmax(140px,1fr));
+gap:10px;
+}
+
+.card{
+background:#0d2236;
+border:1px solid #18577b;
+border-radius:10px;
+padding:14px;
+text-align:center;
+}
+
+.label{
+color:#8da6b9;
+font-size:12px;
+}
+
+.value{
+font-size:26px;
+font-weight:bold;
+margin-top:8px;
+}
+
+.blue{
+color:#28c9ff;
+}
+
+.green{
+color:#39ee82;
+}
+
+.yellow{
+color:#ffd84e;
+}
+
+.purple{
+color:#a78cff;
+}
+
+.orange{
+color:#ff9d50;
+}
+
+.red{
+color:#ff6075;
+}
+
+.grid{
+display:grid;
+grid-template-columns:
+2fr 1fr;
+gap:12px;
+margin-top:12px;
+}
+
+.panel{
+background:#0b1d2f;
+border:1px solid #18577b;
+border-radius:10px;
+padding:14px;
+}
+
+.panel h3{
+margin-top:0;
+font-size:16px;
+}
+
+.chartHeader{
+display:flex;
+justify-content:space-between;
+align-items:center;
+flex-wrap:wrap;
+gap:8px;
+}
+
+canvas{
+display:block;
+width:100%;
+height:360px;
+background:#050d15;
+border-radius:8px;
+}
+
+.waveControls{
+display:flex;
+gap:5px;
+flex-wrap:wrap;
+margin-bottom:10px;
+}
+
+.waveControls button{
+padding:7px 10px;
+font-size:11px;
+}
+
+button{
+padding:11px 15px;
+margin:4px;
+border:0;
+border-radius:6px;
+background:#176b9e;
+color:white;
+font-weight:bold;
+cursor:pointer;
+}
+
+button:hover{
+opacity:.85;
+}
+
+.greenBtn{
+background:#16b957;
+}
+
+.redBtn{
+background:#d93636;
+}
+
+.purpleBtn{
+background:#714bc1;
+}
+
+.health{
+text-align:center;
+}
+
+.healthNumber{
+font-size:58px;
+font-weight:bold;
+color:#39ee82;
+}
+
+.fault{
+font-size:23px;
+font-weight:bold;
+padding:15px;
+margin-top:12px;
+border-radius:8px;
+background:#123d2a;
+color:#39ee82;
+}
+
+.features{
+display:grid;
+grid-template-columns:
+repeat(3,1fr);
+gap:8px;
+}
+
+.feature{
+background:#102940;
+padding:12px;
+border-radius:7px;
+text-align:center;
+}
+
+.recordStatus{
+padding:10px;
+margin-top:10px;
+background:#102940;
+border-radius:7px;
+}
+
+.conditionGrid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+gap:4px;
+}
+
+.conditionGrid button{
+font-size:11px;
+min-height:42px;
+}
+
+.moduleGrid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:8px;
+}
+
+.moduleGrid div{
+background:#102940;
+padding:10px;
+border-radius:7px;
+border-left:3px solid #28c9ff;
+}
+
+.moduleGrid b{
+display:block;
+font-size:13px;
+}
+
+.moduleGrid span{
+display:block;
+color:#9ab0bf;
+font-size:11px;
+margin-top:4px;
+}
+
+.blueBtn{
+background:#2678d9;
+}
+
+.devicePanel{
+border-left:3px solid #28c9ff;
+}
+.deviceRow{
+display:flex;
+align-items:center;
+flex-wrap:wrap;
+gap:10px 14px;
+}
+.deviceRow label{color:#9ab0bf;font-size:12px;font-weight:bold;}
+.deviceRow select{background:#102940;color:#fff;border:1px solid #2a5268;border-radius:6px;padding:9px 12px;min-width:150px;}
+.deviceRow span{font-size:12px;font-weight:bold;padding:6px 10px;border-radius:999px;border:1px solid transparent;}
+.deviceStatusConnected{color:#39ee82;background:rgba(57,238,130,.10);border-color:#39ee82;}
+.deviceStatusDisconnected{color:#ff4d4d;background:rgba(255,77,77,.10);border-color:#ff4d4d;}
+.addConditionBtn{border:1px dashed #28c9ff !important;color:#28c9ff;}
+
+.waveInfo{
+display:flex;
+flex-wrap:wrap;
+gap:8px 18px;
+padding:8px 2px 2px;
+color:#9ab0bf;
+font-size:12px;
+}
+
+.waveInfo b{
+color:#ffffff;
+}
+
+.waveTools{
+display:flex;
+flex-wrap:wrap;
+gap:6px;
+margin-bottom:8px;
+}
+
+#wave{
+width:100%;
+height:360px;
+background:#02070b;
+border:1px solid #1c3b4f;
+border-radius:6px;
+cursor:crosshair;
+touch-action:none;
+}
+
+@media(max-width:800px){
+
+.grid{
+grid-template-columns:1fr;
+}
+
+.features{
+grid-template-columns:
+repeat(2,1fr);
+}
+
+canvas{
+height:300px;
+}
+
+}
+
+
+.advancedCards{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+  gap:12px;
+  margin-bottom:20px;
+}
+.advancedCards .card{
+  min-height:90px;
+}

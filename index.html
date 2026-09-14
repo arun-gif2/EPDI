@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta name="viewport"
+content="width=device-width,initial-scale=1">
+
+<title>
+EPDI - Electromechanical Proxy Diagnostic Interface
+</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<header>
+
+<h1>
+EPDI - ELECTROMECHANICAL PROXY DIAGNOSTIC INTERFACE
+</h1>
+
+
+</header>
+
+
+<div class="container">
+<div class="panel devicePanel" style="margin-bottom:12px;">
+<h3>DEVICE SELECTION</h3>
+<div class="deviceRow">
+<label for="deviceSelect">DEVICE STATUS</label>
+<select id="deviceSelect" onchange="selectDevice(this.value)">
+<option value="device_1">DEVICE_1</option>
+<option value="device_2">DEVICE_2</option>
+<option value="device_3">DEVICE_3</option>
+<option value="device_4">DEVICE_4</option>
+</select>
+<span id="deviceStatus" class="deviceStatusConnected">ONLINE</span>
+</div>
+</div>
+
+
+
+<!-- ================================================= -->
+<!-- LIVE MEASUREMENTS -->
+<!-- ================================================= -->
+
+
+<div class="sectionTitle">ADVANCED DIAGNOSTICS</div>
+<div class="cards advancedCards">
+  <div class="card"><div class="label">DC OFFSET</div><div class="value" id="dcOffset">--</div><div class="unit">V</div></div>
+  <div class="card"><div class="label">PEAK VOLTAGE</div><div class="value" id="peakVoltage">--</div><div class="unit">V</div></div>
+  <div class="card"><div class="label">THD</div><div class="value" id="thd">--</div><div class="unit">%</div></div>
+  <div class="card"><div class="label">FUNDAMENTAL</div><div class="value" id="fundamental">--</div><div class="unit">V</div></div>
+  <div class="card"><div class="label">2× HARMONIC</div><div class="value" id="harmonic2">--</div><div class="unit">V</div></div>
+  <div class="card"><div class="label">3× HARMONIC</div><div class="value" id="harmonic3">--</div><div class="unit">V</div></div>
+  <div class="card"><div class="label">RMS / PEAK</div><div class="value" id="rmsPeakRatio">--</div><div class="unit">ratio</div></div>
+  <div class="card"><div class="label">KURTOSIS</div><div class="value" id="kurtosis">--</div><div class="unit"></div></div>
+  <div class="card"><div class="label">SKEWNESS</div><div class="value" id="skewness">--</div><div class="unit"></div></div>
+  <div class="card"><div class="label">ZERO CROSSINGS</div><div class="value" id="zeroCrossings">--</div><div class="unit">count</div></div>
+  <div class="card"><div class="label">FREQ STABILITY</div><div class="value" id="frequencyStability">--</div><div class="unit">%</div></div>
+  <div class="card"><div class="label">PHASE STABILITY</div><div class="value" id="phaseStability">--</div><div class="unit">%</div></div>
+  <div class="card"><div class="label">VOLTAGE RIPPLE</div><div class="value" id="voltageRipple">--</div><div class="unit">%</div></div>
+  <div class="card"><div class="label">VARIANCE</div><div class="value" id="variance">--</div><div class="unit">V²</div></div>
+  <div class="card"><div class="label">SNR</div><div class="value" id="snrDb">--</div><div class="unit">dB</div></div>
+  <div class="card"><div class="label">FAULT INDEX</div><div class="value" id="faultIndex">--</div><div class="unit">/100</div></div>
+</div>
+
+<div class="cards">
+
+
+<div class="card">
+
+<div class="label">
+ADC
+</div>
+
+<div id="adc"
+class="value blue">
+---
+</div>
+
+</div>
+
+
+<div class="card">
+
+<div class="label">
+VOUT
+</div>
+
+<div id="voltage"
+class="value green">
+---
+</div>
+
+<div class="label">
+V
+</div>
+
+</div>
+
+
+<div class="card">
+
+<div class="label">
+FREQUENCY
+</div>
+
+<div id="frequency"
+class="value yellow">
+---
+</div>
+
+<div class="label">
+Hz
+</div>
+
+</div>
+
+
+<div class="card">
+
+<div class="label">
+RPM
+</div>
+
+<div id="rpm"
+class="value purple">
+---
+</div>
+
+</div>
+
+
+<div class="card">
+
+<div class="label">
+RMS
+</div>
+
+<div id="rms"
+class="value orange">
+---
+</div>
+
+<div class="label">
+V
+</div>
+
+</div>
+
+
+<div class="card">
+
+<div class="label">
+PEAK-PEAK
+</div>
+
+<div id="pp"
+class="value red">
+---
+</div>
+
+<div class="label">
+V
+</div>
+
+</div>
+
+
+<div class="card">
+
+<div class="label">
+CREST FACTOR
+</div>
+
+<div id="crest"
+class="value blue">
+---
+</div>
+
+</div>
+
+
+</div>
+
+
+<!-- ================================================= -->
+<!-- WAVEFORM -->
+<!-- ================================================= -->
+
+<div class="panel"
+style="margin-top:12px;">
+
+<div class="chartHeader">
+
+<h3>
+OUTPUT WAVEFORM — MEASURED SIGNAL
+</h3>
+
+<div>
+
+<button onclick="zoomOut()">− ZOOM OUT</button>
+<button onclick="zoomIn()">+ ZOOM IN</button>
+<button onclick="resetView()">RESET VIEW</button>
+<button onclick="toggleHold()" id="holdBtn">HOLD</button>
+<button onclick="toggleGrid()" id="gridBtn">GRID ON</button>
+<button onclick="exportWaveCSV()">EXPORT CSV</button>
+<button onclick="autoScale()">AUTO Y</button>
+
+</div>
+
+</div>
+
+
+<div class="waveControls">
+
+<button
+onclick="setVertical(0.5)">
+±0.5 V
+</button>
+
+<button
+onclick="setVertical(1)">
+±1 V
+</button>
+
+<button
+onclick="setVertical(2)">
+±2 V
+</button>
+
+<button
+onclick="setVertical(3)">
+±3 V
+</button>
+
+<button
+onclick="setVertical(0)">
+AUTO Y
+</button>
+
+</div>
+
+
+<canvas
+id="wave"
+width="1200"
+height="360">
+</canvas>
+
+
+<div class="waveInfo">
+<span>VIEW: <b id="viewInfo">1× / FULL</b></span>
+<span>TIME WINDOW: <b id="timeWindow">128.0 ms</b></span>
+<span>CURSOR: <b id="cursorInfo">--</b></span>
+<span>MIN: <b id="minInfo">--</b></span>
+<span>MAX: <b id="maxInfo">--</b></span>
+<span>PK-PK: <b id="viewPP">--</b></span>
+</div>
+
+<p style="color:#8da6b9;font-size:12px;">
+Mouse wheel = zoom | Drag = pan | Click = measurement cursor | Green = measured signal | Gray = zero/reference center line
+</p>
+
+</div>
+
+
+<!-- ================================================= -->
+<!-- HEALTH -->
+<!-- ================================================= -->
+
+<div class="grid">
+
+
+<div class="panel">
+
+<h3>
+SIGNAL FEATURES
+</h3>
+
+
+<div class="features">
+
+
+<div class="feature">
+
+<div class="label">
+RMS
+</div>
+
+<b id="fRms">
+---
+</b>
+
+</div>
+
+
+<div class="feature">
+
+<div class="label">
+PEAK-PEAK
+</div>
+
+<b id="fPP">
+---
+</b>
+
+</div>
+
+
+<div class="feature">
+
+<div class="label">
+CREST FACTOR
+</div>
+
+<b id="fCrest">
+---
+</b>
+
+</div>
+
+
+<div class="feature">
+
+<div class="label">
+FREQUENCY
+</div>
+
+<b id="fFreq">
+---
+</b>
+
+</div>
+
+
+<div class="feature">
+
+<div class="label">
+RPM
+</div>
+
+<b id="fRPM">
+---
+</b>
+
+</div>
+
+
+<div class="feature">
+
+<div class="label">
+POLE PAIRS
+</div>
+
+<b>
+7
+</b>
+
+</div>
+
+
+</div>
+
+</div>
+
+
+<div class="panel health">
+
+<h3>
+MACHINE HEALTH
+</h3>
+
+
+<div
+id="health"
+class="healthNumber">
+---
+</div>
+
+<div>
+/ 100
+</div>
+
+
+<div
+id="fault"
+class="fault">
+WAITING
+</div>
+
+
+</div>
+
+
+</div>
+
+
+<!-- ================================================= -->
+<!-- EPDI DIAGNOSTIC COVERAGE -->
+<!-- ================================================= -->
+
+<div class="grid" style="margin-top:12px;">
+
+<div class="panel">
+
+<h3>EPDI DIAGNOSTIC COVERAGE</h3>
+
+<p style="color:#9ab0bf;font-size:12px;line-height:1.5;">
+Representative operating conditions from the diagnostic framework are available as individually selectable training profiles.
+The existing EPDI project-specific belt and pulley fault classes are retained.
+</p>
+
+<div class="conditionGrid" id="conditionGrid">
+
+<button onclick="condition('NORMAL')">NORMAL</button>
+<button onclick="condition('IMBALANCE')">IMBALANCE</button>
+<button onclick="condition('MISALIGNMENT')">MISALIGNMENT</button>
+<button onclick="condition('BEARING DEGRADATION')">BEARING DEGRADATION</button>
+<button onclick="condition('GEAR DEFECT')">GEAR DEFECT</button>
+<button onclick="condition('CAVITATION')">CAVITATION</button>
+<button onclick="condition('OVERLOAD')">OVERLOAD</button>
+<button onclick="condition('LUBRICATION DEFICIENCY')">LUBRICATION DEFICIENCY</button>
+<button onclick="condition('STRUCTURAL DEGRADATION')">STRUCTURAL DEGRADATION</button>
+<button onclick="condition('PROGRESSIVE WEAR')">PROGRESSIVE WEAR</button>
+<button onclick="condition('INCIPIENT FAILURE')">INCIPIENT FAILURE</button>
+<button onclick="condition('BELT DAMAGE')">BELT DAMAGE</button>
+<button onclick="condition('PULLEY DAMAGE')">PULLEY DAMAGE</button>
+<button onclick="condition('BELT + PULLEY')">BELT + PULLEY</button>
+<button class="addConditionBtn" onclick="addOtherCondition()">＋ OTHER / ADD OPTION</button>
+
+</div>
+
+<div class="recordStatus">
+Selected condition: <b id="condition">NORMAL</b><br>
+Stored profiles: <b id="storedProfiles">0</b> / 20<br>
+Test result: <b id="testResult">NOT TESTED</b><br>
+Match score: <b id="testScore">0%</b>
+</div>
+
+</div>
+
+<div class="panel">
+
+<h3>EXPERIMENT & DATA CONTROL</h3>
+
+<div class="features">
+<div class="feature"><div class="label">PLATFORM</div><b>ERP-1</b></div>
+<div class="feature"><div class="label">WORKBENCH</div><b>ERW</b></div>
+<div class="feature"><div class="label">INTERFACE</div><b>SW-001</b></div>
+<div class="feature"><div class="label">SAMPLE RATE</div><b>4 kS/s</b></div>
+<div class="feature"><div class="label">WINDOW</div><b>128 ms</b></div>
+<div class="feature"><div class="label">POLE PAIRS</div><b>7</b></div>
+</div>
+
+<br>
+
+<button class="purpleBtn" onclick="baseline()">SAVE NORMAL BASELINE</button>
+<button class="blueBtn" onclick="saveCondition()">SAVE CONDITION</button>
+<button class="greenBtn" onclick="startRecording()">START RECORDING</button>
+<button class="redBtn" onclick="stopRecording()">STOP</button>
+<button onclick="testSignal()">TEST CURRENT SIGNAL</button>
+<button onclick="virtualReset()">RESET</button>
+<button class="redBtn" onclick="clearAll()">CLEAR ALL PROFILES</button>
+
+<div class="recordStatus">
+Recording: <b id="recording">STOPPED</b><br>
+Recorded samples: <b id="samples">0</b>
+</div>
+
+</div>
+
+</div>
+
+
+<script src="script.js"></script>
+
+</body>
+
+</html>
